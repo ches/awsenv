@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Awsenv by michaelcontento</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/michaelcontento/awsenv">Fork On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/michaelcontento/awsenv/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/michaelcontento/awsenv/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Awsenv</h1>
+          <p>Simple AWS environment manager (aka rbenv for aws)</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/michaelcontento">michaelcontento</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1>Simple AWS Environment Management</h1>
+
+<p><a href="https://github.com/michaelcontento/awsenv">awsenv</a> lets you easily switch between multiple <a href="https://aws.amazon.com/">AWS</a> environments. It's
+simple, unobtrusive, and follows the UNIX tradition of single-purpose tool that
+do one thing well. It also includes the latest versions of the <a href="https://aws.amazon.com/">AWS</a> CLI tools
+, so that you're ready to go in few seconds.</p>
+
+<p><a href="https://github.com/michaelcontento/awsenv">awsenv</a> is heavily inspired by <a href="https://github.com/sstephenson/rbenv">rbenv</a> from <a href="https://github.com/sstephenson">sstephenson</a>.</p>
+
+<h2>How it works</h2>
+
+<p><a href="https://github.com/michaelcontento/awsenv">awsenv</a> operates on the per-user directory <code>~/.awsenv</code>. Environments in
+<a href="https://github.com/michaelcontento/awsenv">awsenv</a> correspond to subdirectories of <code>~/.awsenv/envs</code>. For example, you
+might have <code>~/.awsenv/envs/acme-corporation</code> and <code>~/.awsenv/envs/private</code>.</p>
+
+<h2>Installation</h2>
+
+<h3>Basic checkout</h3>
+
+<ol>
+<li>
+<p>Check out <a href="https://github.com/michaelcontento/awsenv">awsenv</a> into <code>~/.awsenv</code>.</p>
+
+<pre><code>$ git clone git://github.com/michaelcontento/awsenv.git "$HOME/.awsenv"
+</code></pre>
+</li>
+<li>
+<p>Add <code>~/.awsenv/bin</code> to your <code>$PATH</code> for access to the <a href="https://github.com/michaelcontento/awsenv">awsenv</a> command-line
+utility.</p>
+
+<pre><code>$ echo 'export PATH="$HOME/.awsenv/bin:$PATH"' &gt;&gt; ~/.bash_profile
+</code></pre>
+
+<p><strong>Zsh note:</strong> Modify your <code>~/.zshenv</code> file instead of <code>~/.bash_profile</code>.</p>
+</li>
+<li>
+<p>Add <code>awsenv init</code> to your shell to load the default environment.</p>
+
+<pre><code>$ echo 'eval "$(awsenv init -)"' &gt;&gt; ~/.bash_profile
+</code></pre>
+
+<p><strong>Zsh note:</strong> Modify your <code>~/.zshenv</code> file instead of <code>~/.bash_profile</code>.</p>
+</li>
+<li>
+<p>Restart your shell so the path changes take effect. You can now begin using
+<a href="https://github.com/michaelcontento/awsenv">awsenv</a>.</p>
+
+<pre><code>$ exec $SHELL
+</code></pre>
+</li>
+</ol><h3>Upgrading</h3>
+
+<p>If you've installed <a href="https://github.com/michaelcontento/awsenv">awsenv</a> using the instructions above, you can upgrade 
+your installation at any time using <a href="http://git-scm.com">git</a>.</p>
+
+<p>To upgrade to the latest development version of <a href="https://github.com/michaelcontento/awsenv">awsenv</a>, use <code>git pull</code>:</p>
+
+<pre><code>$ cd ~/.awsenv
+$ git pull
+</code></pre>
+
+<p>Or use the builtin update command:</p>
+
+<pre><code>$ awsenv update
+</code></pre>
+
+<p>To upgrade to a specific release of <a href="https://github.com/michaelcontento/awsenv">awsenv</a>, check out the corresponding tag:</p>
+
+<pre><code>$ cd ~/.awsenv
+$ git fetch
+$ git tag
+0.1.0
+0.2.0
+$ git checkout 0.2.0
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>Like <a href="http://git-scm.com">git</a>, the <a href="https://github.com/michaelcontento/awsenv">awsenv</a> command delegates to subcommands based on its first
+argument. The most common subcommands are:</p>
+
+<h3>awsenv init</h3>
+
+<p>This is the only command that will modify your current shell. Here is what this
+command does:</p>
+
+<ol>
+<li>Executes <code>awsenv rehash</code>
+</li>
+<li>Expose the usage of <a href="https://github.com/michaelcontento/awsenv">awsenv</a> to the world with the variables described
+below</li>
+<li>Prefix your current <code>PATH</code> with <code>~/.awsenv/amazon/bin</code> so that all <a href="https://aws.amazon.com/">AWS</a>
+CLI tools are available</li>
+<li>Configures various variables required by the <a href="https://aws.amazon.com/">AWS</a> tools:
+
+<ul>
+<li>
+<code>AWS_${TOOL}_HOME</code> for all tools</li>
+<li>Credential variables (e.g. <code>AWS_CREDENTIAL_FILE</code>)</li>
+<li>Variables regarding the used identity file (e.g. <code>AWS_IDENTITY_FILE</code>)</li>
+<li>Try to define <code>JAVA_HOME</code>, if not already set</li>
+</ul>
+</li>
+<li>Add the used identity file to the <code>ssh-agent</code>
+</li>
+</ol><p>Run <code>awsenv init -</code> for yourself to see exactly what happens under the hood.</p>
+
+<p>The special name <code>-</code> tells <a href="https://github.com/michaelcontento/awsenv">awsenv</a> to use the environment selected with
+<code>awsenv use</code> previously.</p>
+
+<p><a href="https://github.com/michaelcontento/awsenv">awsenv</a> expose it's presence to the outside world with the following 
+variables:</p>
+
+<ul>
+<li>
+<code>AWSENV_LOADED=1</code> indicates that <a href="https://github.com/michaelcontento/awsenv">awsenv</a> is loaded properly</li>
+<li>
+<code>AWSENV_NAME</code> contains the name of the currently used environment</li>
+</ul><h3>awsenv use</h3>
+
+<p>Set the global environment name to be used in all shells by writing the name to
+the <code>~/.awsenv/default</code> file.</p>
+
+<pre><code>$ awsenv use acme-corporation
+</code></pre>
+
+<p>All environments are stored as seperate directory in <code>~/.awsenv/env</code>.</p>
+
+<h3>awsenv list</h3>
+
+<p>Display a list of all currently installed environments.</p>
+
+<pre><code>$ awsenv list
+</code></pre>
+
+<h3>awsenv rehash</h3>
+
+<p>The <a href="https://aws.amazon.com/">AWS</a> CLI tools are located in <code>~/.awsenv/amazon</code> and <em>every</em> tool has his
+own <code>/bin</code> directory for the executables. But if we would use these, your <code>PATH</code>
+variable would be unreadable long. <a href="https://github.com/michaelcontento/awsenv">awsenv</a> avoids this by creating symlinks
+for all executables in one directory called <code>~/.awsenv/amazon/bin</code>. And creating
+these symlinks is the job of <code>awsenv rehash</code>.</p>
+
+<pre><code>$ awsenv rehash
+</code></pre>
+
+<h3>awsenv import</h3>
+
+<p>This command helps you to import environments into <a href="https://github.com/michaelcontento/awsenv">awsenv</a>. Just read the 
+help of this command, checkout the <a href="https://github.com/michaelcontento/awsenv-example-env">awsenv-example-env</a> repository and you 
+should be able to setup all required files without any problems.</p>
+
+<pre><code>$ awsenv import git git://github.com/michaelcontento/awsenv-example-env.git example
+</code></pre>
+
+<p>Currently only environments stored as <a href="http://git-scm.com">Git</a> repository are supported. But you 
+can help to expand this list by simply creating a new executable named 
+<code>awsenv-import-&lt;TYPE&gt;</code>. Pull requests are welcome!</p>
+
+<h2>Development</h2>
+
+<p>The <a href="https://github.com/michaelcontento/awsenv">awsenv</a> source code is hosted on <a href="https://github.com">GitHub</a>. It's clean, modular, and 
+easy to understand, even if you're not a shell hacker.</p>
+
+<p>Please feel free to submit pull requests and file bugs on the <a href="https://github.com/michaelcontento/awsenv/issues">issue tracker</a>.</p>
+
+<h2>License</h2>
+
+<pre><code>Copyright 2009-2012 Michael Contento &lt;michaelcontento@gmail.com&gt;
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
